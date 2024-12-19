@@ -16,43 +16,48 @@ import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import { axiosRequest } from '@/utils/axiosRequest';
 import { api } from '@/config/config';
+import Link from 'next/link';
 
 export default function Header() {
   let path = usePathname();
   let [catalog,setCatalog] = useState(false)
   let [category,setCategory] = useState([])
+  let [idx,setIdx] = useState(null)
 
   async function getCategories() {
     try {
       const {data} = await axiosRequest.get(api + 'Category/get-categories')
       setCategory(data.data)
-      console.log(data.data);
     } catch (error) {
       console.error(error);
     }
   }
-
+console.log(idx);
   useEffect(() => {
    getCategories()
-  },[])
+  },[])    
   return (
     <>
     {catalog && <div className='w-[100%] h-[100vh] bg-[rgba(99,98,98,0.43)] absolute z-20'>
       <div className='flex justify-end'>
       <CloseIcon className='m-[20px]' onClick={() =>{setCatalog(!catalog)}} />
       </div>
-      <div className='flex justify-center items-center'>
-      <div className='bg-white w-[100%] py-[20px] flex'>
-         <div>
+      <div>
+      <div className='bg-white w-[100%]'>
          {category.map((el) => {
               return(<>
-              <div key={el.id}>
-                <span>{el.categoryName}</span>
+         <div className='w-[40%] bg-gray-200'>
+              <div className='ml-[40%] w-[60%] py-[10px]' key={el.id}>
+              <span className='p-[10px] rounded-[3px] hover:bg-white hover:text-[#1ABC9C] w-[100%]' onMouseOver={() => setIdx(el.id)}>{el.categoryName}</span>
               </div>
+              </div>
+ 
               </>)
             })}
-         </div>
-        </div>
+            <div>
+              {}
+            </div>
+            </div>
       </div>
         </div>}
       {path === '/' && (
@@ -135,7 +140,7 @@ export default function Header() {
                 <RoomOutlinedIcon sx={{ color: 'black' }} />
               </div>
               <div>
-                <PersonOutlineOutlinedIcon sx={{ color: 'black' }} />
+             <Link href={'/profile'}><PersonOutlineOutlinedIcon sx={{ color: 'black' }} /></Link>
               </div>
               <div>
                 <ShoppingBasketOutlinedIcon sx={{ color: 'black' }} />
