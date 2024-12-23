@@ -30,7 +30,8 @@ export default function Card() {
       );
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      toast.error("Failed to add product to cart.");
+      toast.error("Failed to add product to cart. Log in, please.");
+      router.push('/login')
     }
   };
 

@@ -74,16 +74,9 @@ export default function CardK() {
   return (
     <section className="max-w-6xl m-auto flex justify-between items-start">
       <section className="grid grid-cols-1 gap-[20px] w-[60%]">
-        <div>
-          <h1>Корзина: {data['totalProducts']} товаров</h1>
-          <span
-            onClick={() => {
-              Clear();
-            }}
-            className="text-red-500 cursor-pointer"
-          >
-            Очистить корзину
-          </span>
+        <div className="flex justify-between items-center">
+          <h1 className="text-[17px] text-[#1ABC9C] font-[500]"><span className="text-[15px] text-gray-500">Корзина:</span> {data['totalProducts']} товаров</h1>
+          <span onClick={()=>{Clear()}} className="text-red-500 cursor-pointer">Очистить корзину</span>
         </div>
         {cart.length > 0 ? (
           cart.map((el, i) => (
@@ -98,10 +91,10 @@ export default function CardK() {
                 />
               </div>
               <div>
-                <p>{el.product['price']}.с</p>
-                <h3>{el.product['productName']}</h3>
-                <span>Color: {el.product['color']}</span>
-                <div className="flex items-center gap-2">
+                <p className="text-[19px] font-[600]">{el.product['price']}.с</p>
+                <h3 className="text-gray-800 text-[16px] font-[400]">{el.product['productName']}</h3>
+                <span className="text-[16px] text-gray-600">Color: <span style={{color: el.product['color']}}>{el.product['color']}</span></span>
+                <div className="flex items-center gap-2 mt-[70px]">
                   <div>
                     <IconButton onClick={() => IncreaseProduct(el.id)}>
                       <AddBoxOutlinedIcon />
@@ -118,7 +111,7 @@ export default function CardK() {
               </div>
               {el.product['hasDiscount'] && (
                 <div>
-                  <span>Цена со скидкой: {el.product['discountPrice']}.с</span>
+                  <span className="text-gray-700 text-[16px] font-[400]">Цена со скидкой: <span className="text-[#1ABC9C] font-[500]">{el.product['discountPrice']}.с</span></span>
                 </div>
               )}
             </section>
@@ -127,10 +120,10 @@ export default function CardK() {
           <p>Your cart is empty.</p>
         )}
       </section>
-      <section>
-        <p>Количество: {data['totalProducts']}.с</p>
-        <p>Сумма: {data['totalPrice']}.с</p>
-        <p>Сумма со скидкой: {data['totalDiscountPrice']}.с</p>
+      <section className="bg-slate-200 p-[30px] rounded-[10px] grid grid-cols-1 gap-[10px] mt-[50px]">
+        <p>Количество...............................{data['totalProducts']}.с</p>
+        <p>Сумма.....................................{data['totalPrice']}.с</p>
+        <p>Сумма со скидкой....................{data['totalDiscountPrice']}.с</p>
       </section>
       <Toaster />
     </section>

@@ -30,8 +30,7 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     setToken(token);
-  }, []);
-
+  }, []); 
 
   useEffect(() => {
     async function getCategories() {
@@ -44,6 +43,7 @@ export default function Header() {
     }
     getCategories();
   }, []);
+  
   useEffect(() => {
     if (idx !== null) {
       const filteredCategories = category.filter((el) => el.id !== idx);
@@ -88,6 +88,8 @@ export default function Header() {
                 </div>
               </div>
             ))}
+            {/* subcategory */}
+           {}
           </div>
         </div>
       )}
@@ -108,7 +110,7 @@ export default function Header() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                >
+                  >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
