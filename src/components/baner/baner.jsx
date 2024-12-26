@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 export default function Baner() {
   return (
-    <div className={baner.banerContainer}>
+    <div className={`${baner.banerContainer} xs:px-[10px] xs:max-w-[380px]`}> 
       <Swiper
         style={{
           '--swiper-navigation-color': '#fff',

@@ -121,7 +121,7 @@ export default function CardK() {
         )}
       </section>
       <section className="bg-slate-200 p-[30px] rounded-[10px] grid grid-cols-1 gap-[10px] mt-[50px]">
-        <p>Количество...............................{data['totalProducts']}.с</p>
+        <p>Количество...............................{data['totalProducts']}</p>
         <p>Сумма.....................................{data['totalPrice']}.с</p>
         <p>Сумма со скидкой....................{data['totalDiscountPrice']}.с</p>
       </section>

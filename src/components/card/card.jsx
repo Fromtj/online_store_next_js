@@ -4,6 +4,7 @@ import Image from "next/image";
 import { axiosRequest } from "@/utils/axiosRequest";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from 'react-hot-toast';
+import Link from "next/link";
 
 export default function Card() {
   const [products, setProducts] = useState([]);
@@ -47,17 +48,20 @@ export default function Card() {
   return (
     <>
       <Toaster />
-      <section className="grid grid-cols-5 gap-[30px] max-w-6xl mx-auto my-[100px]">
+      <section className="grid grid-cols-5 gap-[30px] max-w-6xl mx-auto my-[100px] xs:grid-cols-1 xs:px-[15px] xs:gap-[20px] xs:w-[100%]">
         {products.map((el) => (
+        
           <div key={el.id}>
-            <div className="max-w-xs rounded-lg border border-gray-300 shadow-md overflow-hidden">
+            <div className="max-w-xs xs:m-auto rounded-lg border border-gray-300 shadow-md overflow-hidden">
+            <Link href={`/${el.id}`}>
               <Image 
                 src={`https://store-api.softclub.tj/images/${el.image}`} 
                 width={200} 
                 height={200} 
-                alt={el.productName || "Product image"} 
+                alt="Product image"
                 className="w-full h-48 object-cover"
               />
+               </Link>
               <div className="p-[16px]">
                 <h3 className="text-lg font-semibold text-gray-800 truncate">{el.productName}</h3>
                 <p className="text-xl font-bold text-[#1ABC9C] mt-2">{el.price}</p>
@@ -71,6 +75,7 @@ export default function Card() {
               </div>
             </div>
           </div>
+        
         ))}
       </section>
     </>

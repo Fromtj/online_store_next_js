@@ -6,6 +6,9 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xs: { max: '400px' },
+      },
     extend: {
       colors: {
         background: "var(--background)",
