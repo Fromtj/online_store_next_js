@@ -72,15 +72,15 @@ export default function CardK() {
   }, []);
 
   return (
-    <section className="max-w-6xl m-auto flex justify-between items-start">
-      <section className="grid grid-cols-1 gap-[20px] w-[60%]">
+    <section className="max-w-6xl m-auto flex justify-between items-start xs:block xs:px-[10px] xs:pt-[50px]">
+      <section className="grid grid-cols-1 gap-[20px] w-[60%] xs:w-[100%] xs:mb-[40px]">
         <div className="flex justify-between items-center">
           <h1 className="text-[17px] text-[#1ABC9C] font-[500]"><span className="text-[15px] text-gray-500">Корзина:</span> {data['totalProducts']} товаров</h1>
           <span onClick={()=>{Clear()}} className="text-red-500 cursor-pointer">Очистить корзину</span>
         </div>
         {cart.length > 0 ? (
           cart.map((el, i) => (
-            <section key={i} className="border p-4 rounded shadow flex items-start gap-[50px]">
+            <section key={i} className="border p-4 rounded shadow flex items-start gap-[50px] xs:grid xs:grid-cols-1 xs:gap-[10px]">
               <div>
                 <Image
                   src={`https://store-api.softclub.tj/images/${el.product['image']}`}

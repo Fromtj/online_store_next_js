@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import logo from '@/assets/images/logo.png';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -11,12 +12,14 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box } from '@mui/material';
-import { useState, useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import Link from 'next/link';
 import { axiosRequest } from '@/utils/axiosRequest';
 import { api } from '@/config/config';
-import Link from 'next/link';
+import CategoryIcon from '@mui/icons-material/Category';
 
 export default function Header() {
   const path = usePathname();
@@ -26,33 +29,34 @@ export default function Header() {
   const [idx, setIdx] = useState(null);
   const [byIdx, setByIdx] = useState([]);
   const [token, setToken] = useState(null);
-  const [categoryName,setCategoryName] = useState('')
+  const [categoryName, setCategoryName] = useState('');
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Получение токена из локального хранилища
+  // Fetch token from local storage
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    setToken(token);
+    const storedToken = localStorage.getItem('access_token');
+    setToken(storedToken);
   }, []);
 
-  // Загрузка категорий
+  // Fetch categories
   useEffect(() => {
-    async function getCategories() {
+    const getCategories = async () => {
       try {
         const { data } = await axiosRequest.get(`${api}Category/get-categories`);
         setCategory(data.data);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching categories:', error);
       }
-    }
+    };
     getCategories();
   }, []);
 
-  // Фильтрация подкатегорий
+  // Update subcategories based on selected category
   useEffect(() => {
     setByIdx(category.filter((el) => el.id === idx));
   }, [category, idx]);
 
-  // Обработчики кликов
+  // Handlers
   const handleCartClick = () => {
     if (!token) {
       alert('Log in, please');
@@ -71,6 +75,43 @@ export default function Header() {
     }
   };
 
+  const handleCatalogClick = () => {
+    router.push('/catalog');
+  };
+
+  const toggleDrawer = (open) => () => setDrawerOpen(open);
+
+  const DrawerList = (
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+        <div className="grid grid-cols-1 gap-8">
+          <div className="flex items-center gap-[5px]">
+            <RoomOutlinedIcon sx={{ color: 'black' }} />
+            Location
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <IconButton onClick={handleProfileClick}>
+              <PersonOutlineOutlinedIcon sx={{ color: 'black' }} />
+            </IconButton>
+            Profile
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <IconButton onClick={handleCartClick}>
+              <ShoppingBasketOutlinedIcon sx={{ color: 'black' }} />
+            </IconButton>
+            Cart
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <IconButton onClick={handleCatalogClick}>
+              <CategoryIcon />
+            </IconButton>
+            Catalog
+          </div>
+        </div>
+      </List>
+    </Box>
+  );
+
   return (
     <>
       {catalog && (
@@ -82,7 +123,7 @@ export default function Header() {
             />
           </div>
           <div className="bg-white w-full h-[90%] m-auto flex items-start overflow-hidden rounded-lg">
-            {/* Список категорий */}
+            {/* Categories */}
             <div className="w-[40%] max-h-full py-[50px] bg-gray-200 overflow-auto">
               {category.map((el) => (
                 <div className="bg-gray-200" key={el.id}>
@@ -91,7 +132,10 @@ export default function Header() {
                       href={`/catalog/${el.id}`}
                       className="p-2 rounded hover:bg-white hover:text-[#1ABC9C] w-full cursor-pointer"
                       onClick={() => setCatalog(false)}
-                      onMouseOver={() => {setIdx(el.id),setCategoryName(el.categoryName)}}
+                      onMouseOver={() => {
+                        setIdx(el.id);
+                        setCategoryName(el.categoryName);
+                      }}
                     >
                       {el.categoryName}
                     </Link>
@@ -99,13 +143,19 @@ export default function Header() {
                 </div>
               ))}
             </div>
-            {/* Подкатегории */}
+            {/* Subcategories */}
             <div className="mx-[20px] w-[60%] grid grid-cols-3 gap-x-[30px] gap-y-[15px] py-[50px] overflow-auto">
               {idx !== null &&
                 byIdx.length > 0 &&
                 byIdx[0]?.subCategories?.map((e) => (
                   <div key={e.id} className="w-[200px]">
-                    <Link href={`catalog/${categoryName}/${e.id}`} onClick={() => {setCatalog(false)}} className="hover:text-[#1ABC9C]">{e.subCategoryName}</Link>
+                    <Link
+                      href={`catalog/${categoryName}/${e.id}`}
+                      onClick={() => setCatalog(false)}
+                      className="hover:text-[#1ABC9C]"
+                    >
+                      {e.subCategoryName}
+                    </Link>
                   </div>
                 ))}
             </div>
@@ -115,12 +165,31 @@ export default function Header() {
 
       {path !== '/login' && path !== '/registration' && (
         <header className="fixed top-0 left-0 w-full bg-[rgba(255,255,255,0.81)] border-b border-gray-200 z-10">
-          <div className="max-w-6xl mx-auto flex justify-between py-5 items-center">
+          <div className="max-w-6xl mx-auto flex justify-between py-5 items-center xs:block xs:px-[10px]">
             <div className="flex items-center gap-12">
-              <Image className="w-24" src={logo} alt="Company Logo" />
+              <div className="xs:m-auto xs:flex xs:items-center xs:justify-between xs:gap-[200px] xs:my-[10px]">
+                <Image className="w-24 xs:w-[80px]" src={logo} alt="Company Logo" />
+                <svg
+                  onClick={toggleDrawer(true)}
+                  className="md:-mr-0.75 3xl:hidden xs:block"
+                  height="20"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  ></path>
+                </svg>
+              </div>
               <Button
                 onClick={() => setCatalog(!catalog)}
-                className="flex gap-2"
+                className="flex gap-2 xs:hidden"
                 sx={{ bgcolor: '#1ABC9C', color: 'white' }}
               >
                 <svg
@@ -175,7 +244,7 @@ export default function Header() {
                 />
               </Box>
             </div>
-            <div className="flex gap-8 items-center">
+            <div className="flex gap-8 items-center xs:hidden">
               <div>
                 <RoomOutlinedIcon sx={{ color: 'black' }} />
               </div>
@@ -193,6 +262,9 @@ export default function Header() {
           </div>
         </header>
       )}
+      <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
+        {DrawerList}
+      </Drawer>
     </>
   );
 }

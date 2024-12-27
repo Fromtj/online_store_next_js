@@ -1,98 +1,171 @@
-.swiper {
+.banerContainer {
   width: 100%;
-  height: 100%;
-  background: #000;
-}
-
-.swiper-slide {
-  font-size: 18px;
-  color: #fff;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 40px 60px;
-}
-
-.parallax_bg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 130%;
-  height: 100%;
-  -webkit-background-size: cover;
-  background-size: cover;
-  background-position: center;
-  background-image: url('../../assets/images/bg1.jpg');
-}
-
-.swiper-slide .title {
-  font-size: 41px;
-  font-weight: 300;
-}
-
-.swiper-slide .subtitle {
-  font-size: 21px;
-}
-
-.swiper-slide .text {
-  font-size: 14px;
-  max-width: 400px;
-  line-height: 1.3;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .mySwiper {
-    border-radius: 5px;
-    margin-top: 150px;
-    width: 1152px;
+  position: relative;
+  border-radius: 5px;
+  margin-top: 150px;
+  width: 100%; /* Полная ширина */
+  background-image: url('../../assets/images/bg1.jpg');
+  background-position: center;
+  background-size: cover;
 }
-.banerContainer {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-  
-  .mySwiper {
-    position: relative;
-  }
-  
-  
+
+.slideContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  color: #1ABC9C;
+}
+
+.textSection {
+  max-width: 50%;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #1ABC9C;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.imageSection {
+  max-width: 40%;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Адаптив --- */
+
+/* Экран до 1024px */
+@media (max-width: 1024px) {
   .slideContent {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 40px;
-    color: #fff;
+    padding: 20px;
+    flex-direction: column;
+    text-align: center;
   }
-  
+
   .textSection {
-    max-width: 50%;
-  }
-  
-  .title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .subtitle {
-    font-size: 1.5rem;
+    max-width: 100%;
     margin-bottom: 20px;
+  }
+
+  .imageSection {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+  }
+
+  .description {
+    font-size: 0.875rem;
+  }
+}
+
+/* Экран до 768px */
+@media (max-width: 768px) {
+  .mySwiper {
+    margin-top: 100px;
+  }
+
+  .slideContent {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 1.125rem;
+  }
+
+  .description {
+    font-size: 0.75rem;
+  }
+}
+
+/* Экран до 400px */
+@media (max-width: 400px) {
+
+.banerContainer {
+  padding-top: 100px;
+}
+  .slideContent {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .textSection,
+  .imageSection {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 1.5rem;
     color: #1ABC9C;
   }
-  
-  .description {
+
+  .subtitle {
     font-size: 1rem;
-    line-height: 1.5;
+    color: #1ABC9C;
   }
-  
-  .imageSection {
-    max-width: 40%;
+
+  .description {
+    font-size: 0.75rem;
+    line-height: 1.3;
+    color: #1ABC9C;
   }
-  
+
   .image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    box-shadow: none;
   }
-  
+}
+
+/* Экран до 320px */
+@media (max-width: 320px) {
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+  }
+
+  .description {
+    font-size: 0.65rem;
+  }
+
+  .image {
+    width: 90%; /* Немного уменьшаем изображение */
+    margin: 0 auto;
+  }
+}

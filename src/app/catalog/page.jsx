@@ -19,7 +19,7 @@ export default function Catalog() {
     getCategory()
     },[])
     return(<>
-    <section className="max-w-6xl m-auto my-[130px] grid grid-cols-4 gap-[50px]">
+    <section className="max-w-6xl m-auto my-[130px] grid grid-cols-4 gap-[50px] xs:grid-cols-1 xs:px-[10px]">
         {data.map((el) => {
             return(<div key={el.id}>
                 <Link href={`/catalog/${el.id}`} className="text-black text-[18px] font-[600] hover:text-[#1ABC9C]">{el.categoryName}</Link>
